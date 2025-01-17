@@ -1,5 +1,6 @@
 package io.arrogantprogrammer;
 
+import io.quarkus.logging.Log;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -14,17 +15,10 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AffirmationResource {
 
-    List<Affirmation> affirmations = new ArrayList<>(){{
-        add(new Affirmation("You are amazing!", "ArrogantProgrammer"));
-        add(new Affirmation("Believe in yourself!", "ConfidentCoder"));
-        add(new Affirmation("You can achieve anything!", "DiabolicalDeveloper"));
-        add(new Affirmation("Stay positive and strong!", "HopefulHacker"));
-        add(new Affirmation("Your potential is limitless!", "AngelicArchitect"));
-
-    }};
-
     @GET
     public Affirmation getAffirmation() {
-        return affirmations.get((int) (Math.random() * affirmations.size()));
+        Affirmation affirmation = Affirmation.randomAffirmation();
+        Log.debug("Returning affirmation: " + affirmation.text());
+        return affirmation;
     }
 }
